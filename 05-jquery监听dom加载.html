@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        // onload方法会等到加载完毕，并且会等到资源也加载完毕才执行
+        // DOMContentLoaded事件只会等到DOM加载完毕就会执行回掉
+        // document.readyState 的属性有如下状态 用 onreadystatechange事件监听
+        // uninitialized - 还未开始载入
+        // loading - 载入中
+        // interactive - 已加载，文档与用户可以开始交互
+        // complete - 载入完成
+        window.onload = function(ev) {
+            var res = document.querySelectorAll('div')
+            console.log('onload',res)
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var res = document.querySelectorAll('div')
+            console.log('DOMContentLoaded', res)
+        })
+        document.attachEvent('onreadystatechange', function(ev) {
+            console.log(document.readyState)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // function jQuery() {
+
+        // }
+        // jQuery.extend = function(obj) {
+        //     // 此时此刻的this就是jQuery这个类
+        //     for (var key in obj) {
+        //         this[key] = obj[key];
+        //     }
+        // }
+        // jQuery.extend({
+        //     isTest: function() {
+        //         console.log('test')
+        //     }
+        // })
+        // jQuery.isTest();
+        // jQuery.prototype.extend = function(obj) {
+        //     // 此时此刻的this是jQuery对象
+        //     console.log(this); // jQuery
+        //     for (var key in obj) {
+        //         this[key] = obj[key];
+        //     }
+        // }
+        // var q = new jQuery();
+        // q.extend();
+
+        jQuery.extend = jQuery.prototype.extend = function (obj) {
+            console.log(this);
+            for (var key in obj) {
+                this[key] = obj[key];
+            }
+        }
+        jQuery.extend({}) //方法
+        var qe = new jQuery();
+        qe.extend() //jQuery
+    </script>
+</body>
+</html>
