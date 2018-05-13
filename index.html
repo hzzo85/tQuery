@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    <div id="div1"></div>
-    <div id="div2"></div>
-    <div id="div3"></div>
-<script src="./index.js"></script>
-<script>
-    // console.log($([1,2,3]));
-    // console.log($({0:'ok', 1:'okk', length:2}));
-    var res = $('div')
-    console.log(res.get())
-    console.log(res.eq(2))
-    console.log(res.first())
+    <p>我是p标签</p>
+    <p id="p1">我是p标签#p1</p>
+    <p>123</p>
+    <div class="box">
+        <div id="div1">1</div>
+        <div id="div2">2</div>
+        <div id="div3">3</div>
+    </div>
+    <div class="box">
+        <div id="div11">1</div>
+        <div id="div22">2</div>
+        <div id="div33">3</div>
+    </div>
+    <div class="box">
+            <div id="div111">1</div>
+            <div id="div222">2</div>
+            <div id="div333">3</div>
+        </div>
+    <script src="./index.js"></script>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script> -->
+    <script>
+        // console.log($([1,2,3]));
+        // console.log($({0:'ok', 1:'okk', length:2}));
+        var res = $('div')
+        console.log(res.get())
+        console.log(res.eq(2))
+        console.log(res.first())
 
-    var arr1 = [1, 3, 5, 7, 9];
-    var obj1 = {0: 1, 1: 3, 2: 5, length:3}
-    var obj2 = {'name':'ok', 'ye': 'te'}
-    $.each(obj2, function(key, value) {
-        // console.log(this)
-        console.log(key, value)
-    })
-    $(obj2).each(function(key, value) {
-        // console.log(this)
-        console.log(key, value)
-    })
-
-    var res = $.map(arr1, function(value, index) {
-        if (index === 2) {
-            return value
+        var arr1 = [1, 3, 5, 7, 9];
+        var obj1 = {
+            0: 1,
+            1: 3,
+            2: 5,
+            length: 3
         }
-    })
-    console.log(res)
-</script>
+        var obj2 = {
+            'name': 'ok',
+            'ye': 'te'
+        }
+        $.each(obj1, function (key, value) {
+            // console.log(this)
+            console.log(key, value)
+        })
+        $(obj2).each(function (key, value) {
+            // console.log(this)
+            console.log(key, value)
+        })
+
+        var res = $.map(arr1, function (value, index) {
+            if (index === 2) {
+                return value
+            }
+        })
+        console.log(res)
+        // console.log($('#box').remove('#div1'))
+        // console.log($('#box').html('asd'))
+        // console.log($('#box').text('asd'))
+        // console.log($('p').prependTo('.box'))
+        // console.log($('p').append($('.box')))
+        // console.log($('#div3').insertBefore($('.box')))
+        // console.log($('p').insertAfter($('.box')))
+        // console.log($('.box').before('asd'))
+        // console.log($('.box').after('asd'))
+        // console.log($('p').next())
+        // console.log($('p').prev())
+        console.log($('p').replaceAll('.box'))
+    </script>
 </body>
+
 </html>

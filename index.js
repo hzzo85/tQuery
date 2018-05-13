@@ -250,6 +250,287 @@
                 }
             }
             return res;
+        },
+    })
+    // DOM操作相关
+    jQuery.prototype.extend({
+        empty: function () {
+            // 1.遍历所有找到的元素
+            this.each(function (key, value) {
+                value.innerHTML = '';
+            })
+            // 2.方便链式编程
+            return this;
+        },
+        remove: function(sele) {
+            if (arguments.length === 0) {
+                // 1.遍历制定的元素
+                this.each(function (key, value) {
+                    // 根据遍历到的元素找到对应的父元素
+                    var parent = value.parentNode;
+                    // 通过父元素删除指定的元素
+                    parent.removeChild(value);
+                })
+            } else {
+                var $this = this;
+                // 1.根据传入的选择器找到对应的元素
+                $(sele).each(function (key, value) {
+                    // 2.遍历找到的元素，并获得对应的类型
+                    var type = value.tagName;
+                    // 3.遍历指定的元素
+                    $this.each(function(k, v) {
+                        // 4.获取指定元素的类型
+                        var t = v.tagName;
+                        if (t === type) {
+                            // 5.判断找到的元素类型和指定元素的类型
+                            // 根据遍历到的元素找到对应的父元素
+                            var parent = value.parentNode;
+                            // 通过父元素删除指定的元素
+                            parent.removeChild(value);
+                        }
+                    })
+
+                })
+            }
+            return this;
+        },
+        html: function(content) {
+            if (arguments.length === 0) {
+                return this[0].innerHTML;
+            } else {
+                // this[0].innerHTML = content;
+                this.each(function(key, value) {
+                    value.innerHTML = content;
+                })
+                return this;
+            }
+        },
+        text: function(content) {
+            if (arguments.length === 0) {
+                var res = '';
+                this.each(function (key, value) {
+                    res += value.innerText;
+                })
+                return res;
+            } else {
+                this.each(function (key, value) {
+                    value.innerText = content;
+                })
+                return this;
+            }
+        },   
+        appendTo: function(sele) {
+            // 接收一个字符串 $('div') ==> jQuery
+            // 接收一个jQuery对象 $($('div') ==> jQuery
+            // 接收一个DOM元素 $(divs) ==>j Query
+            // 统一将传入的数据转化为jQuery对象
+            var $target = $(sele);
+            var $this = this;
+            var res = [];
+            // 遍历取出所有指定的元素
+            $.each($target, function(key, value) {
+                // 2.遍历取出所有的元素
+                $this.each(function(k, v) {
+                    // 3.判断当前时候是第0个指定的元素
+                    if (key === 0) {
+                        // 直接添加
+                        value.appendChild(v);
+                        res.push(v);
+                    } else {
+                        //拷贝元素插入
+                        var temp = v.cloneNode(true);
+                        value.appendChild(temp);
+                        res.push(temp);
+                    }
+                })
+            });
+            return $(res);
+            // 遍历取出所有指定的元素
+            // for (var i = 0; i < $target.length; i++) {
+            //     var targetEle = $target[i];
+            //     // 2.遍历取出所有的元素
+            //     for (var j = 0; j < $this.length; j++) {
+            //         var sourceEle = $this[j];
+            //         // 3.判断当前时候是第0个指定的元素
+            //         if (i === 0) {
+            //             targetEle.appendChild(sourceEle);
+            //         } else {
+            //             //拷贝元素插入
+            //             var temp = sourceEle.cloneNode(true);
+            //             targetEle.appendChild(temp);
+            //         }
+            //     }
+                
+            // }
+        },
+        prependTo: function(sele) {
+            // 统一将传入的数据转化为jQuery对象
+            var $target = $(sele);
+            var $this = this;
+            var res = [];
+            // 遍历取出所有指定的元素
+            $.each($target, function(key, value) {
+                // 2.遍历取出所有的元素
+                $this.each(function(k, v) {
+                    // 3.判断当前时候是第0个指定的元素
+                    if (key === 0) {
+                        // 直接添加
+                        value.insertBefore(v, value.firstChild);
+                        res.push(v);
+                    } else {
+                        //拷贝元素插入
+                        var temp = v.cloneNode(true);
+                        value.insertBefore(temp, value.firstChild);
+                        res.push(temp);
+                    }
+                })
+            });
+            return $(res);
+        },
+        append: function(sele) {
+            // 判断传入的参数是否是字符串
+            if (jQuery.isString(sele)) {
+                var $this = this;
+                $this.each(function(key, value) {
+                    value.innerHTML += sele;
+                })
+            } else {
+                $(sele).appendTo(this);
+            }
+            return this;
+        },
+        prepend: function(sele) {
+            if (jQuery.isString(sele)) {
+                var $this = this;
+                $this.each(function(key, value) {
+                    value.innerHTML = sele + value.innerHTML;
+                })
+            } else {
+                $(sele).prependTo(this);
+            }
+            return this;
+        },
+        insertBefore: function(sele) {
+            // 统一将传入的数据转化为jQuery对象
+            var $target = $(sele);
+            var $this = this;
+            var res = [];
+            // 遍历取出所有指定的元素
+            $.each($target, function(key, value) {
+                // 1.拿到指定元素的父元素
+                var parent = value.parentNode;
+                // 2.遍历取出所有的元素
+                $this.each(function(k, v) {
+                    // 3.判断当前时候是第0个指定的元素
+                    if (key === 0) {
+                        // 直接添加
+                        parent.insertBefore(v, value);
+                        res.push(v);
+                    } else {
+                        //拷贝元素插入
+                        var temp = v.cloneNode(true);
+                        parent.insertBefore(temp, value);
+                        res.push(temp);
+                    }
+                })
+            });
+            return $(res);
+        },
+        insertAfter: function(sele) {
+            var $target = $(sele),
+                $this = this,
+                res = [];
+            // 遍历目标元素
+            $.each($target, function(key, value) {
+                var parent = value.parentNode;
+                $this.each(function(k, v) {
+                    if (key === 0) {
+                        parent.insertBefore(v, value.nextSibling);
+                        res.push(v);
+                    } else {
+                        //拷贝元素插入
+                        var temp = v.cloneNode(true);
+                        parent.insertBefore(temp, value.nextSibling);
+                        res.push(temp);
+                    }
+                })
+            });
+            return $(res);
+        },
+        before: function(sele) {
+            if (jQuery.isString(sele)) {
+                var $this = this;
+                $this.each(function(key, value) {
+                    value.outerHTML = sele + value.innerHTML;
+                })
+            } else {
+                $(sele).insertBefore(this);
+            }
+            return this;
+        },
+        after: function(sele) {
+            if (jQuery.isString(sele)) {
+                var $this = this;
+                $this.each(function(key, value) {
+                    value.outerHTML += sele;
+                })
+            } else {
+                $(sele).insertAfter(this);
+            }
+            return this;
+        },
+        next: function() {
+            var $this = this,
+                res = [];
+            $this.each(function(key, value) {
+                var $next = value.nextSibling;
+                while ($next.nodeType !== 1) {
+                    $next = $next.nextSibling;
+                    res.push($next);
+                }
+            })
+            return res;
+        },
+        prev: function() {
+            var $this = this,
+                res = [];
+            $this.each(function(key, value) {
+                var $prev = value.previousSibling;
+                while ($prev.nodeType !== 1) {
+                    $prev = $prev.previousSibling;
+                    if (!$prev) {
+                        break
+                    }
+                    res.push($prev)
+                }
+            })
+            return res;
+        },
+        replaceAll: function(sele) {
+            // 统一将传入的数据转化为jQuery对象
+            var $target = $(sele);  // 替换的目标
+            var $this = this;  // 要添加的
+            var res = [];
+            // 遍历取出所有指定的元素
+            $.each($target, function(key, value) {
+                // 2.遍历取出所有的元素
+                $this.each(function(k, v) {
+                    // 3.判断当前时候是第0个指定的元素
+                    if (key === 0) {
+                        // 1.将元素插入到指定元素的前面
+                        $(v).insertBefore(value);
+                    } else {
+                        //拷贝元素插入
+                        var temp = v.cloneNode(true);
+                        // 1.将元素插入到指定元素的前面
+                        $(temp).insertBefore(value);
+                    }
+                    res.push(v);
+                })
+                $(value).remove();
+            });
+            // 2.删除指定元素
+            return $(res);
         }
     })
     /*
