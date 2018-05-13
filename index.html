@@ -18,18 +18,20 @@
         <div id="div3">3</div>
     </div>
     <div class="box">
-        <div id="div11">1</div>
-        <div id="div22">2</div>
-        <div id="div33">3</div>
+        <div id="div11">11</div>
+        <div id="div22">22</div>
+        <div id="div33">33</div>
     </div>
     <div class="box">
-            <div id="div111">1</div>
-            <div id="div222">2</div>
-            <div id="div333">3</div>
+            <div id="div111">111</div>
+            <div id="div222">222</div>
+            <div id="div333">333</div>
         </div>
     <script src="./index.js"></script>
     <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script> -->
-    <script>
+    
+</body>
+<script>
         // console.log($([1,2,3]));
         // console.log($({0:'ok', 1:'okk', length:2}));
         var res = $('div')
@@ -74,8 +76,9 @@
         // console.log($('.box').after('asd'))
         // console.log($('p').next())
         // console.log($('p').prev())
-        console.log($('p').replaceAll('.box'))
+        // console.log($('p').replaceAll($('.box')))
+        console.log($('p').replaceWith('.box'))
+        // console.log($('p').before('.box'))
+        // console.log($('p').before('.box'))
     </script>
-</body>
-
 </html>

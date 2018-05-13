@@ -461,7 +461,13 @@
             if (jQuery.isString(sele)) {
                 var $this = this;
                 $this.each(function(key, value) {
-                    value.outerHTML = sele + value.innerHTML;
+                    // value.outerHTML = sele + value.outerHTML;
+                    value.insertAdjacentHTML('beforebegin', sele);
+                    // 接受四个参数
+                    // beforebegin 作为前一个同辈元素
+                    // afterbegin 作为第一个子元素
+                    // beforeend 作为最后一个子元素
+                    // afterend 作为后一个同辈元素
                 })
             } else {
                 $(sele).insertBefore(this);
@@ -472,7 +478,8 @@
             if (jQuery.isString(sele)) {
                 var $this = this;
                 $this.each(function(key, value) {
-                    value.outerHTML += sele;
+                    // value.outerHTML += sele;
+                    value.insertAdjacentHTML('afterend', sele);
                 })
             } else {
                 $(sele).insertAfter(this);
@@ -531,6 +538,19 @@
             });
             // 2.删除指定元素
             return $(res);
+        },
+        replaceWith: function(sele) {
+            if (jQuery.isString(sele)) {
+                var $target = this;  // 要添加的
+                // 遍历取出所有指定的元素
+                $.each($target, function(key, value) {
+                    $(value).before(sele);
+                    $(value).remove();
+                });
+            } else {
+                $(sele).replaceAll(this);
+            }
+           return this;
         }
     })
     /*
