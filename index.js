@@ -1,12 +1,12 @@
 // 自己实现jQuery
 (function (window, undefined) {
-    var jQuery = function(selector) {
+    var jQuery = function (selector) {
         return new jQuery.prototype.init(selector);
     }
 
     jQuery.prototype = {
         constructor: jQuery,
-        init: function(selector) {
+        init: function (selector) {
             /*
                 1.传入 '' null undefined NaN 0 false 返回空的jQuery对象
                 2.字符串
@@ -20,9 +20,9 @@
             // 0.去除字符串两端的空格
             selector = jQuery.trim(selector);
             // 1.传入 '' null undefined NaN 0 false 返回空的jQuery对象
-            if(!selector) {
-                return this; 
-            } 
+            if (!selector) {
+                return this;
+            }
             // 2.方法处理
             else if (jQuery.isFunction(selector)) {
                 jQuery.ready(selector)
@@ -30,7 +30,7 @@
             //  2.字符串
             // 代码片段：会将创建好的DOM元素储存到jQuery对象中返回
             // 选择器：会讲找到的所有元素存储到jQuery对象中返回
-            else if (jQuery.isString(selector)){
+            else if (jQuery.isString(selector)) {
                 // 2.1判断是否代码片段
                 if (jQuery.isHTML(selector)) {
                     // 1.根据代码片段创建所有的元素
@@ -79,9 +79,9 @@
                 }
                 */
                 var arr = [].slice.call(selector);
-                    // 将真数组转换为伪数组
+                // 将真数组转换为伪数组
                 [].push.apply(this, arr);
-            } 
+            }
             // 4.除上述类型以外
             // 会将传入的数据存储到jQuery对象中返回
             else {
@@ -99,26 +99,26 @@
         push: [].push,
         sort: [].sort,
         splice: [].splice,
-        toArray: function() {
+        toArray: function () {
             // 伪数组转换为真数组
             return [].slice.call(this);
         },
         // 如果不传递参数，相当于调用toArray
-        get: function(num) {
+        get: function (num) {
             // 没有传参
             if (arguments.length === 0) {
                 return this.toArray();
-            } 
+            }
             // 传递不是负数
             else if (num >= 0) {
                 return this[num];
-            } 
+            }
             // 传递负数
             else {
-                return this[this.length + num%this.length];
+                return this[this.length + num % this.length];
             }
         },
-        eq: function(num) {
+        eq: function (num) {
             // 没有传参
             if (arguments.length === 0) {
                 return new jQuery();
@@ -126,40 +126,41 @@
             // 传递不是负数
             else {
                 return jQuery(this.get(num));
-            } 
+            }
         },
-        first: function() {
+        first: function () {
             return this.eq(0);
         },
-        last: function() {
+        last: function () {
             return this.eq(-1);
         },
-        each: function(fn) {
+        each: function (fn) {
             return jQuery.each(this, fn);
         }
-    }
-    jQuery.extend = function(obj) {
+    };
+    jQuery.extend = function (obj) {
         for (var key in obj) {
             this[key] = obj[key];
         }
-    }
+    };
     // 方法并入jquery对象
     jQuery.extend = jQuery.prototype.extend = function (obj) {
         for (var key in obj) {
             this[key] = obj[key];
         }
-    }
+    };
+    // 工具方法
     jQuery.extend({
-        isString : function (str) {
+        isString: function (str) {
             return typeof str === 'string';
         },
-        isHTML : function (str) {
-            return str.charAt(0) == '<' 
-            && str.charAt(str.length - 1) == '>' 
-            && str.length > 2
+        isHTML: function (str) {
+            return str.charAt(0) == '<' &&
+                str.charAt(str.length - 1) == '>' &&
+                str.length > 2
         },
-        trim : function (str) {
-            if(!jQuery.isString(str)) {
+        trim: function (str) {
+            if (!jQuery.isString(str)) {
                 return str;
             }
             // 判断是否支持trim
@@ -169,25 +170,25 @@
                 return str.replace(/^\s+|\s+$/g, '');
             }
         },
-        isObject : function (sele) {
+        isObject: function (sele) {
             return typeof sele === 'object';
         },
-        isWindow : function (sele) {
+        isWindow: function (sele) {
             return sele === window;
         },
-        isArray : function (sele) {
-            if (typeof sele === 'object'
-                && 'length' in sele
-                && sele !== window) {
-                    return true;
-                }
-                return false;
+        isArray: function (sele) {
+            if (typeof sele === 'object' &&
+                'length' in sele &&
+                sele !== window) {
+                return true;
+            }
+            return false;
         },
-        isFunction : function (sele) {
+        isFunction: function (sele) {
             return typeof sele === 'function';
         },
         // 监听dom是否加载完毕
-        ready: function(fn) {
+        ready: function (fn) {
             if (document.readyState == 'complete') {
                 fn();
             } else if (document.addEventListener) {
@@ -195,14 +196,14 @@
                     fn();
                 })
             } else {
-                document.attachEvent('onreadystatechange', function() {
+                document.attachEvent('onreadystatechange', function () {
                     if (document.readyState == 'complete') {
                         fn();
                     }
                 })
             }
         },
-        each: function(obj, callback) {
+        each: function (obj, callback) {
             // 判断是否数组
             if (jQuery.isArray(obj)) {
                 for (var i = 0; i < obj.length; i++) {
@@ -214,7 +215,7 @@
                         break;
                     }
                 }
-            } 
+            }
             // 判断是否对象
             else if (jQuery.isObject(obj)) {
                 for (var key in obj) {
@@ -229,7 +230,7 @@
             }
             return obj;
         },
-        map: function(obj, callback) {
+        map: function (obj, callback) {
             var res = [];
             // 判断是否数组
             if (jQuery.isArray(obj)) {
@@ -239,7 +240,7 @@
                         res.push(temp);
                     }
                 }
-            } 
+            }
             // 判断是否对象
             else if (jQuery.isObject(obj)) {
                 for (var key in obj) {
@@ -251,7 +252,22 @@
             }
             return res;
         },
-    })
+        getStyle: function (dom, styleName) {
+            if (window.getComputedStyle) {
+                return window.getComputedStyle(dom)[styleName];
+            } else {
+                return dom.currentStyle[styleName];
+            }
+        },
+        addEvent: function(dom, name, callback) {
+            if (dom.addEventListener) {
+                dom.addEventListener(name, callback);
+            } else {
+                dom.attachEvent('on' + name, callback);
+            }
+            
+        },
+    });
     // DOM操作相关
     jQuery.prototype.extend({
         empty: function () {
@@ -262,7 +278,7 @@
             // 2.方便链式编程
             return this;
         },
-        remove: function(sele) {
+        remove: function (sele) {
             if (arguments.length === 0) {
                 // 1.遍历制定的元素
                 this.each(function (key, value) {
@@ -278,7 +294,7 @@
                     // 2.遍历找到的元素，并获得对应的类型
                     var type = value.tagName;
                     // 3.遍历指定的元素
-                    $this.each(function(k, v) {
+                    $this.each(function (k, v) {
                         // 4.获取指定元素的类型
                         var t = v.tagName;
                         if (t === type) {
@@ -294,18 +310,18 @@
             }
             return this;
         },
-        html: function(content) {
+        html: function (content) {
             if (arguments.length === 0) {
                 return this[0].innerHTML;
             } else {
                 // this[0].innerHTML = content;
-                this.each(function(key, value) {
+                this.each(function (key, value) {
                     value.innerHTML = content;
                 })
                 return this;
             }
         },
-        text: function(content) {
+        text: function (content) {
             if (arguments.length === 0) {
                 var res = '';
                 this.each(function (key, value) {
@@ -318,8 +334,8 @@
                 })
                 return this;
             }
-        },   
-        appendTo: function(sele) {
+        },
+        appendTo: function (sele) {
             // 接收一个字符串 $('div') ==> jQuery
             // 接收一个jQuery对象 $($('div') ==> jQuery
             // 接收一个DOM元素 $(divs) ==>j Query
@@ -328,9 +344,9 @@
             var $this = this;
             var res = [];
             // 遍历取出所有指定的元素
-            $.each($target, function(key, value) {
+            $.each($target, function (key, value) {
                 // 2.遍历取出所有的元素
-                $this.each(function(k, v) {
+                $this.each(function (k, v) {
                     // 3.判断当前时候是第0个指定的元素
                     if (key === 0) {
                         // 直接添加
@@ -360,18 +376,18 @@
             //             targetEle.appendChild(temp);
             //         }
             //     }
-                
+
             // }
         },
-        prependTo: function(sele) {
+        prependTo: function (sele) {
             // 统一将传入的数据转化为jQuery对象
             var $target = $(sele);
             var $this = this;
             var res = [];
             // 遍历取出所有指定的元素
-            $.each($target, function(key, value) {
+            $.each($target, function (key, value) {
                 // 2.遍历取出所有的元素
-                $this.each(function(k, v) {
+                $this.each(function (k, v) {
                     // 3.判断当前时候是第0个指定的元素
                     if (key === 0) {
                         // 直接添加
@@ -387,11 +403,11 @@
             });
             return $(res);
         },
-        append: function(sele) {
+        append: function (sele) {
             // 判断传入的参数是否是字符串
             if (jQuery.isString(sele)) {
                 var $this = this;
-                $this.each(function(key, value) {
+                $this.each(function (key, value) {
                     value.innerHTML += sele;
                 })
             } else {
@@ -399,10 +415,10 @@
             }
             return this;
         },
-        prepend: function(sele) {
+        prepend: function (sele) {
             if (jQuery.isString(sele)) {
                 var $this = this;
-                $this.each(function(key, value) {
+                $this.each(function (key, value) {
                     value.innerHTML = sele + value.innerHTML;
                 })
             } else {
@@ -410,17 +426,17 @@
             }
             return this;
         },
-        insertBefore: function(sele) {
+        insertBefore: function (sele) {
             // 统一将传入的数据转化为jQuery对象
             var $target = $(sele);
             var $this = this;
             var res = [];
             // 遍历取出所有指定的元素
-            $.each($target, function(key, value) {
+            $.each($target, function (key, value) {
                 // 1.拿到指定元素的父元素
                 var parent = value.parentNode;
                 // 2.遍历取出所有的元素
-                $this.each(function(k, v) {
+                $this.each(function (k, v) {
                     // 3.判断当前时候是第0个指定的元素
                     if (key === 0) {
                         // 直接添加
@@ -436,14 +452,14 @@
             });
             return $(res);
         },
-        insertAfter: function(sele) {
+        insertAfter: function (sele) {
             var $target = $(sele),
                 $this = this,
                 res = [];
             // 遍历目标元素
-            $.each($target, function(key, value) {
+            $.each($target, function (key, value) {
                 var parent = value.parentNode;
-                $this.each(function(k, v) {
+                $this.each(function (k, v) {
                     if (key === 0) {
                         parent.insertBefore(v, value.nextSibling);
                         res.push(v);
@@ -457,10 +473,10 @@
             });
             return $(res);
         },
-        before: function(sele) {
+        before: function (sele) {
             if (jQuery.isString(sele)) {
                 var $this = this;
-                $this.each(function(key, value) {
+                $this.each(function (key, value) {
                     // value.outerHTML = sele + value.outerHTML;
                     value.insertAdjacentHTML('beforebegin', sele);
                     // 接受四个参数
@@ -474,10 +490,10 @@
             }
             return this;
         },
-        after: function(sele) {
+        after: function (sele) {
             if (jQuery.isString(sele)) {
                 var $this = this;
-                $this.each(function(key, value) {
+                $this.each(function (key, value) {
                     // value.outerHTML += sele;
                     value.insertAdjacentHTML('afterend', sele);
                 })
@@ -486,42 +502,15 @@
             }
             return this;
         },
-        next: function() {
-            var $this = this,
-                res = [];
-            $this.each(function(key, value) {
-                var $next = value.nextSibling;
-                while ($next.nodeType !== 1) {
-                    $next = $next.nextSibling;
-                    res.push($next);
-                }
-            })
-            return res;
-        },
-        prev: function() {
-            var $this = this,
-                res = [];
-            $this.each(function(key, value) {
-                var $prev = value.previousSibling;
-                while ($prev.nodeType !== 1) {
-                    $prev = $prev.previousSibling;
-                    if (!$prev) {
-                        break
-                    }
-                    res.push($prev)
-                }
-            })
-            return res;
-        },
-        replaceAll: function(sele) {
+        replaceAll: function (sele) {
             // 统一将传入的数据转化为jQuery对象
-            var $target = $(sele);  // 替换的目标
-            var $this = this;  // 要添加的
+            var $target = $(sele); // 替换的目标
+            var $this = this; // 要添加的
             var res = [];
             // 遍历取出所有指定的元素
-            $.each($target, function(key, value) {
+            $.each($target, function (key, value) {
                 // 2.遍历取出所有的元素
-                $this.each(function(k, v) {
+                $this.each(function (k, v) {
                     // 3.判断当前时候是第0个指定的元素
                     if (key === 0) {
                         // 1.将元素插入到指定元素的前面
@@ -539,19 +528,295 @@
             // 2.删除指定元素
             return $(res);
         },
-        replaceWith: function(sele) {
+        replaceWith: function (sele) {
             if (jQuery.isString(sele)) {
-                var $target = this;  // 要添加的
+                var $target = this; // 要添加的
                 // 遍历取出所有指定的元素
-                $.each($target, function(key, value) {
+                $.each($target, function (key, value) {
                     $(value).before(sele);
                     $(value).remove();
                 });
             } else {
                 $(sele).replaceAll(this);
             }
-           return this;
+            return this;
+        },
+        clone: function(deep) {
+            var res = [];
+            // 判断是否是深复制
+            if (deep) {
+                this.each(function(key, ele) {
+                    var temp = ele.cloneNode(true); //注意，不能复制事件
+                    // 遍历元素中的eventsCache
+                    jQuery.each(ele.eventsCache, function(name, array) {
+                        // 遍历事件对应的数组
+                        jQuery.each(array, function(index, method) {
+                            // 给复制的元素添加事件
+                            $(temp).on(name, method);
+                        })
+                    })
+                    res.push(temp);
+                })
+                return $(res);
+            } else {
+                this.each(function(key, ele) {
+                    var temp = ele.cloneNode(true); //注意，不能复制事件
+                    res.push(temp);
+                })
+                return $(res);
+            }
         }
+    });
+    // 筛选相关方法
+    jQuery.prototype.extend({
+        next: function () {
+            var $this = this,
+                res = [];
+            $this.each(function (key, value) {
+                var $next = value.nextSibling;
+                while ($next.nodeType !== 1) {
+                    $next = $next.nextSibling;
+                    res.push($next);
+                }
+            })
+            return res;
+        },
+        prev: function () {
+            var $this = this,
+                res = [];
+            $this.each(function (key, value) {
+                var $prev = value.previousSibling;
+                while ($prev.nodeType !== 1) {
+                    $prev = $prev.previousSibling;
+                    if (!$prev) {
+                        break
+                    }
+                    res.push($prev)
+                }
+            })
+            return res;
+        },
+    });
+    // 属性操作相关方法
+    jQuery.prototype.extend({
+        attr: function (attr, value) {
+            // 1.判断是否是字符串
+            if (jQuery.isString(attr)) {
+                if (arguments.length === 1) {
+                    return this[0].getAttribute(attr);
+                } else {
+                    this.each(function (key, ele) {
+                        ele.setAttribute(attr, value);
+                    })
+                }
+            }
+            // 2.判断是逗是对象
+            else if (jQuery.isObject(attr)) {
+                var $this = this;
+                // 遍历去除所有属性节点点名称和对应的值
+                $.each(attr, function (key, value) {
+                    // 遍历取出所有的元素
+                    $this.each(function (k, ele) {
+                        ele.setAttribute(key, value);
+                    })
+                })
+            }
+            return this;
+        },
+        prop: function (attr, value) {
+            // 1.判断是否是字符串
+            if (jQuery.isString(attr)) {
+                if (arguments.length === 1) {
+                    return this[0][attr];
+                } else {
+                    this.each(function (key, ele) {
+                        ele[attr] = value;
+                    })
+                }
+            }
+            // 2.判断是逗是对象
+            else if (jQuery.isObject(attr)) {
+                var $this = this;
+                // 遍历去除所有属性节点点名称和对应的值
+                $.each(attr, function (key, value) {
+                    // 遍历取出所有的元素
+                    $this.each(function (k, ele) {
+                        ele[attr] = value;
+                    })
+                })
+            }
+            return this;
+        },
+        css: function (attr, value) {
+            // 1.判断是否是字符串
+            if (jQuery.isString(attr)) {
+                if (arguments.length === 1) {
+                    return jQuery.getStyle(this[0], attr);
+                } else {
+                    this.each(function (key, ele) {
+                        ele.style[attr] = value;
+                    })
+                }
+            }
+            // 2.判断是逗是对象
+            else if (jQuery.isObject(attr)) {
+                var $this = this;
+                // 遍历去除所有属性节点点名称和对应的值
+                $.each(attr, function (key, value) {
+                    // 遍历取出所有的元素
+                    $this.each(function (k, ele) {
+                        ele.style[attr] = value;
+                    })
+                })
+            }
+            return this;
+        },
+        val: function (content) {
+            if (arguments.length === 0) {
+                // 使用的是DOM节点的value属性
+                return this[0].value;
+            } else {
+                this.each(function (key, ele) {
+                    ele.value = content;
+                })
+            }
+        },
+        hasClass: function (name) {
+            var flag = false;
+            if (arguments.length === 0) {
+                return flag;
+            } else {
+                this.each(function (key, ele) {
+                    // 1.获取元素中class保存的值
+                    var className = ' ' + ele.className + ' ';
+                    // 2.给查询的字符串前后也加上空格
+                    name = ' ' + name + ' ';
+                    // 3.通过indexOf判断
+                    if (className.indexOf(name) != -1) {
+                        flag = true;
+                        return false;
+                    }
+                });
+                return flag;
+            }
+        },
+        addClass: function (name) {
+            if (arguments.length === 0) {
+                return this;
+            }
+            // 1.对传入的名字进行切割
+            var names = name.split(' ');
+            // 2.遍历取出所有的元素
+            this.each(function (key, ele) {
+                // 3.遍历数组取出每一个类名
+                $.each(names, function (k, value) {
+                    // 4.判断元素中是否包含指定的类名
+                    if (!$(ele).hasClass(value)) {
+                        ele.className += ' ' + value;
+                    }
+                })
+            })
+            return this;
+
+        },
+        removeClass: function (name) {
+            if (arguments.length === 0) {
+                this.each(function (key, ele) {
+                    ele.className = '';
+                })
+            } else {
+                // 1.对传入的名字进行切割
+                var names = name.split(' ');
+                // 2.遍历取出所有的元素
+                this.each(function (key, ele) {
+                    // 3.遍历数组取出每一个类名
+                    $.each(names, function (k, value) {
+                        // 4.判断元素中是否包含指定的类名
+                        if ($(ele).hasClass(value)) {
+                            ele.className = (' ' + ele.className + ' ').replace(value + ' ', '');
+                        }
+                    })
+                })
+            }
+
+            return this;
+        },
+        toggleClass: function (name) {
+            if (arguments.length === 0) {
+                this.removeClass();
+            }
+            // 1.对传入的名字进行切割
+            var names = name.split(' ');
+            // 2.遍历取出所有的元素
+            this.each(function (key, ele) {
+                // 3.遍历数组取出每一个类名
+                $.each(names, function (k, value) {
+                    // 4.判断元素中是否包含指定的类名
+                    if ($(ele).hasClass(value)) {
+                        // 删除
+                        $(ele).removeClass(value);
+                    } else {
+                        // 添加
+                        $(ele).addClass(value);
+                    }
+                })
+            })
+            return this;
+        },
+    });
+    // 事件操作方法
+    jQuery.prototype.extend({
+        on: function(name, callback) {
+            // 1.遍历取出所有元素
+            this.each(function(key, ele) {
+                // 2.判断当前元素中是否有保存所有事件的对象
+                if(!ele.eventsCache) {
+                    ele.eventsCache = {};
+                }
+                // 3.判断对象中有没有对应类型的数组
+                if (!ele.eventsCache[name]) {
+                    ele.eventsCache[name] = [];
+                    // 4.将回掉函数添加到数组中
+                    ele.eventsCache[name].push(callback);
+                    // 5.添加对应的类型事件
+                    jQuery.addEvent(ele, name, function() {
+                        jQuery.each(ele.eventsCache[name], function(k, method) {
+                            method();
+                        })
+                    })
+                } else {
+                    // 4.将回掉函数添加到数组中
+                    ele.eventsCache[name].push(callback);
+                }
+                // jQuery.addEvent(ele, name, callback)
+            });
+            return this;
+        },
+        off: function(name, callback) {
+            // 1.是否传入参数
+            if (arguments.length === 0) {
+                this.each(function(key, ele) {
+                    ele.eventsCache = {};
+                })
+            } 
+            // 2.是否传入一个参数
+            else if (arguments.length === 1) {
+                this.each(function(key, value) {
+                    ele.eventsCache[name] = [];
+                })
+            }
+            // 3.判断是否传入两个参数
+            else if (arguments.length === 2) {
+                this.each(function(key, ele) {
+                    jQuery.each(ele.eventsCache[name], function(index, method) {
+                        // 判断当前遍历到的方法和传入放大是否相同
+                        if (method === callback) {
+                            ele.eventsCache[name].splice(index, 1);
+                        }
+                    })
+                })
+            }
+        },
     })
     /*
     jQuery.isString = function (str) {

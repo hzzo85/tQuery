@@ -12,7 +12,7 @@
     <p>我是p标签</p>
     <p id="p1">我是p标签#p1</p>
     <p>123</p>
-    <div class="box">
+    <div class="box box1 box3" id="box">
         <div id="div1">1</div>
         <div id="div2">2</div>
         <div id="div3">3</div>
@@ -77,8 +77,25 @@
         // console.log($('p').next())
         // console.log($('p').prev())
         // console.log($('p').replaceAll($('.box')))
-        console.log($('p').replaceWith('.box'))
+        // console.log($('p').replaceWith('.box'))
         // console.log($('p').before('.box'))
         // console.log($('p').before('.box'))
+        // console.log($('div').attr('class', 'ok'));
+        // console.log($('div').css('background', 'pink'))
+        // console.log($('#box').hasClass('box1'))
+        // console.log($('.box').addClass('box11'))
+        // console.log($('#box').removeClass('box1'))
+        // console.log($('#box').toggleClass('box1 box2'))
+        // console.log($('#box').on('click', function(){alert('ok')}))
+        // $('#box').on('click', function() {
+        //     alert('1')
+        // })
+        // $('#box').on('click', function() {
+        //     alert('2')
+        // })
+        // $('#box').on('keyup', function() {
+        //     alert('3')
+        // })
+        console.log($('#box').clone());
     </script>
 </html>
