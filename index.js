@@ -818,6 +818,7 @@
             }
         },
     })
+    // ajax相关方法
     /*
     jQuery.isString = function (str) {
         return typeof str === 'string';
